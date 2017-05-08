@@ -1,6 +1,7 @@
 package com.relevancytester.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.relevancytester.security.AuthoritiesConstants;
 import com.relevancytester.service.ProjectService;
 import com.relevancytester.service.dto.ProjectDTO;
 import com.relevancytester.web.rest.util.HeaderUtil;
@@ -8,6 +9,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -65,6 +67,7 @@ public class ProjectResource {
      */
     @PutMapping("/projects")
     @Timed
+    @Secured(AuthoritiesConstants.DEVELOPER)
     public ResponseEntity<ProjectDTO> updateProject(@RequestBody ProjectDTO projectDTO) throws URISyntaxException {
         log.debug("REST request to update Project : {}", projectDTO);
         if (projectDTO.getId() == null) {
@@ -110,6 +113,7 @@ public class ProjectResource {
      */
     @DeleteMapping("/projects/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.DEVELOPER)
     public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
         log.debug("REST request to delete Project : {}", id);
         projectService.delete(id);

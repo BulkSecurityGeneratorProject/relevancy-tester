@@ -18,16 +18,6 @@
                 [(ngModel)]="project.name"
              />
         </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="relevancyTesterApp.project.created_date" for="field_created_date">Created Date</label>
-            <div class="input-group">
-                <input id="field_created_date" type="text" class="form-control" name="created_date" ngbDatepicker  #created_dateDp="ngbDatepicker" [(ngModel)]="project.created_date"
-                />
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" (click)="created_dateDp.toggle()"><i class="fa fa-calendar"></i></button>
-                </span>
-            </div>
-        </div>
 
     </div>
     <div class="modal-footer">
