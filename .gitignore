@@ -141,3 +141,5 @@ Desktop.ini
 ######################
 .eslintcache
 /node_modules/
+/src/main/webapp/app/*.js
+/src/main/webapp/app/**/*.js
