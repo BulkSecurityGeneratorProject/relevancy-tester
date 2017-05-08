@@ -1,0 +1,14 @@
+version: '2'
+services:
+    relevancytester-app:
+        image: relevancytester
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://relevancytester-postgresql:5432/RelevancyTester
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+        ports:
+            - 8080:8080
+    relevancytester-postgresql:
+        extends:
+            file: postgresql.yml
+            service: relevancytester-postgresql
