@@ -1,0 +1,20 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldName": "created_date",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "changelogDate": "20170508154025",
+    "dto": "mapstruct",
+    "service": "serviceImpl",
+    "entityTableName": "project",
+    "pagination": "no"
+}
