@@ -15,25 +15,29 @@
                     <span jhiTranslate="global.menu.home">Home</span>
                 </a>
             </li>
-            <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer">
-                <a class="nav-link dropdown-toggle" routerLinkActive="active" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
+            <li *jhiHasAnyAuthority="['ROLE_CONTENT', 'ROLE_DEVELOPER']" ngbDropdown class="nav-item dropdown pointer">
+                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="projects-menu">
                     <span>
-                        <i class="fa fa-th-list" aria-hidden="true"></i>
-                        <span jhiTranslate="global.menu.entities.main">
-                            Entities
-                        </span>
+                        <i class="fa fa-th-large" aria-hidden="true"></i>
+                        <span jhiTranslate="global.menu.projects.main">Projects</span>
                         <b class="caret"></b>
                     </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu>
-                    <li uiSrefActive="active">
-                        <a class="dropdown-item" routerLink="project" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span jhiTranslate="global.menu.entities.project">Project</span>
+                    <li *ngFor="let project of projects">
+                        <a class="dropdown-item" [routerLink]="['../project', project.id ]" routerLink="project"  routerLinkActive="active" (click)="collapseNavbar()">
+                            <span>{{project.name}}</span>
                         </a>
                     </li>
-                    <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+                    <li>
+                        <hr>
+                    </li>
+                    <li *jhiHasAnyAuthority="'ROLE_DEVELOPER'">
+                        <a class="dropdown-item" routerLink="project" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-cogs" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.projects.administration">Project administration</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer">

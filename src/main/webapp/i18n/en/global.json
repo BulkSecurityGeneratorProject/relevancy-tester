@@ -19,6 +19,10 @@
                 "logout": "Sign out",
                 "register": "Register"
             },
+            "projects": {
+                "main" : "Projects",
+                "administration" : "Project administration"
+            },
             "admin": {
                 "main": "Administration",
                 "userManagement": "User management",
