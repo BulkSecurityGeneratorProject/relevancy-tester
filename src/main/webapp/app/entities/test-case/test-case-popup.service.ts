@@ -4,8 +4,8 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {DatePipe} from '@angular/common';
 import {TestCase} from './test-case.model';
 import {TestCaseService} from './test-case.service';
-import {ProjectService} from "../project/project.service";
-import {Project} from "../project/project.model";
+import {ProjectService} from '../project/project.service';
+import {Project} from '../project/project.model';
 @Injectable()
 export class TestCasePopupService {
     private isOpen = false;
@@ -14,8 +14,7 @@ export class TestCasePopupService {
                 private modalService: NgbModal,
                 private router: Router,
                 private testCaseService: TestCaseService,
-                private projectService: ProjectService
-    ) {
+                private projectService: ProjectService) {
     }
 
     open(component: Component, projectId: number, id?: number | any): NgbModalRef {
@@ -36,7 +35,7 @@ export class TestCasePopupService {
         });
     }
 
-    testCaseModalRef(component: Component, project:Project, testCase: TestCase): NgbModalRef {
+    testCaseModalRef(component: Component, project: Project, testCase: TestCase): NgbModalRef {
         const modalRef = this.modalService.open(component, {size: 'lg', backdrop: 'static'});
         modalRef.componentInstance.testCase = testCase;
         modalRef.componentInstance.project = project;

@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs/Rx';
 import {EventManager, JhiLanguageService, AlertService} from 'ng-jhipster';
 
-import { Project } from './project.model';
-import { ProjectService } from './project.service';
-import {TestCase} from "../test-case/test-case.model";
-import {Response} from "@angular/http";
+import {Project} from './project.model';
+import {ProjectService} from './project.service';
+import {TestCase} from '../test-case/test-case.model';
+import {Response} from '@angular/http';
 
 @Component({
     selector: 'jhi-project-detail',
@@ -20,13 +20,11 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     private eventProjectSubscriber: Subscription;
     private eventCaseSubscriber: Subscription;
 
-    constructor(
-        private eventManager: EventManager,
-        private jhiLanguageService: JhiLanguageService,
-        private projectService: ProjectService,
-        private route: ActivatedRoute,
-        private alertService: AlertService
-    ) {
+    constructor(private eventManager: EventManager,
+                private jhiLanguageService: JhiLanguageService,
+                private projectService: ProjectService,
+                private route: ActivatedRoute,
+                private alertService: AlertService) {
         this.jhiLanguageService.setLocations(['project']);
     }
 
@@ -48,6 +46,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
             (res: Response) => this.onError(res.json())
         );
     }
+
     previousState() {
         window.history.back();
     }

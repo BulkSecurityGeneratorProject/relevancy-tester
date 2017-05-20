@@ -94,7 +94,7 @@
     "node": ">=6.9.0"
   },
   "scripts": {
-    "lint": "tslint 'src/main/webapp/app/**/*.ts' --force",
+    "lint": "tslint 'src/main/webapp/app/**/*.ts' -e 'src/main/webapp/app/app.constants.ts' --force",
     "lint:fix": "tslint 'src/main/webapp/app/**/*.ts' --fix --force",
     "tsc": "tsc",
     "tsc:w": "tsc -w",

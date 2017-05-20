@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {JhiLanguageService, AlertService, EventManager} from 'ng-jhipster';
 
-import { ProfileService } from '../profiles/profile.service'; // FIXME barrel doesn't work here
-import { JhiLanguageHelper, Principal, LoginModalService, LoginService } from '../../shared';
+import {ProfileService} from '../profiles/profile.service';
+import {JhiLanguageHelper, Principal, LoginModalService, LoginService} from '../../shared';
 
-import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
+import {VERSION, DEBUG_INFO_ENABLED} from '../../app.constants';
 import {ProjectService} from '../../entities/project/project.service';
 import {Response} from '@angular/http';
 import {Project} from '../../entities/project/project.model';
-import {Subscription} from "rxjs";
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'jhi-navbar',
@@ -30,19 +30,18 @@ export class NavbarComponent implements OnInit {
     projects: Project[];
 
     private eventSubscriber: Subscription;
+    private authEventSubscriber: Subscription;
 
-    constructor(
-        private loginService: LoginService,
-        private languageHelper: JhiLanguageHelper,
-        private languageService: JhiLanguageService,
-        private principal: Principal,
-        private loginModalService: LoginModalService,
-        private profileService: ProfileService,
-        private router: Router,
-        private projectService: ProjectService,
-        private alertService: AlertService,
-        private eventManager: EventManager
-    ) {
+    constructor(private loginService: LoginService,
+                private languageHelper: JhiLanguageHelper,
+                private languageService: JhiLanguageService,
+                private principal: Principal,
+                private loginModalService: LoginModalService,
+                private profileService: ProfileService,
+                private router: Router,
+                private projectService: ProjectService,
+                private alertService: AlertService,
+                private eventManager: EventManager) {
         this.version = DEBUG_INFO_ENABLED ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
         this.languageService.addLocation('home');
@@ -59,10 +58,15 @@ export class NavbarComponent implements OnInit {
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
         this.registerChangeInProjects();
+        this.registerChangeInAuth();
     }
 
     registerChangeInProjects() {
         this.eventSubscriber = this.eventManager.subscribe('projectListModification', (response) => this.loadProjects());
+    }
+
+    registerChangeInAuth() {
+        this.authEventSubscriber = this.eventManager.subscribe('authenticationSuccess', (response) => this.loadProjects());
     }
 
     loadProjects() {
@@ -75,7 +79,7 @@ export class NavbarComponent implements OnInit {
     }
 
     changeLanguage(languageKey: string) {
-      this.languageService.changeLanguage(languageKey);
+        this.languageService.changeLanguage(languageKey);
     }
 
     collapseNavbar() {

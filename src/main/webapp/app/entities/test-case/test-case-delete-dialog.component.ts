@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
-import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { EventManager, JhiLanguageService } from 'ng-jhipster';
+import {NgbActiveModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {EventManager, JhiLanguageService} from 'ng-jhipster';
 
-import { TestCase } from './test-case.model';
-import { TestCasePopupService } from './test-case-popup.service';
-import { TestCaseService } from './test-case.service';
+import {TestCase} from './test-case.model';
+import {TestCasePopupService} from './test-case-popup.service';
+import {TestCaseService} from './test-case.service';
 
 @Component({
     selector: 'jhi-test-case-delete-dialog',
@@ -16,13 +16,11 @@ export class TestCaseDeleteDialogComponent {
 
     testCase: TestCase;
 
-    constructor(
-        private jhiLanguageService: JhiLanguageService,
-        private testCaseService: TestCaseService,
-        public activeModal: NgbActiveModal,
-        private eventManager: EventManager
-    ) {
-        this.jhiLanguageService.setLocations(['testCase','project']);
+    constructor(private jhiLanguageService: JhiLanguageService,
+                private testCaseService: TestCaseService,
+                public activeModal: NgbActiveModal,
+                private eventManager: EventManager) {
+        this.jhiLanguageService.setLocations(['testCase', 'project']);
     }
 
     clear() {
@@ -49,10 +47,9 @@ export class TestCaseDeletePopupComponent implements OnInit, OnDestroy {
     modalRef: NgbModalRef;
     routeSub: any;
 
-    constructor(
-        private route: ActivatedRoute,
-        private testCasePopupService: TestCasePopupService
-    ) {}
+    constructor(private route: ActivatedRoute,
+                private testCasePopupService: TestCasePopupService) {
+    }
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
