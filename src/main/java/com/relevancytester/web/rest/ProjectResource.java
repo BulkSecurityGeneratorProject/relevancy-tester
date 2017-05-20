@@ -1,20 +1,19 @@
 package com.relevancytester.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.relevancytester.security.AuthoritiesConstants;
 import com.relevancytester.service.ProjectService;
+import com.relevancytester.service.TestCaseService;
 import com.relevancytester.service.dto.ProjectDTO;
+import com.relevancytester.service.dto.TestCaseDTO;
 import com.relevancytester.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,9 +29,11 @@ public class ProjectResource {
     private static final String ENTITY_NAME = "project";
 
     private final ProjectService projectService;
+    private final TestCaseService testCaseService;
 
-    public ProjectResource(ProjectService projectService) {
+    public ProjectResource(ProjectService projectService, TestCaseService testCaseService) {
         this.projectService = projectService;
+        this.testCaseService = testCaseService;
     }
 
     /**
@@ -49,7 +50,6 @@ public class ProjectResource {
         if (projectDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new project cannot already have an ID")).body(null);
         }
-        projectDTO.setCreated_date(LocalDate.now());
         ProjectDTO result = projectService.save(projectDTO);
         return ResponseEntity.created(new URI("/api/projects/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -67,7 +67,6 @@ public class ProjectResource {
      */
     @PutMapping("/projects")
     @Timed
-    @Secured(AuthoritiesConstants.DEVELOPER)
     public ResponseEntity<ProjectDTO> updateProject(@RequestBody ProjectDTO projectDTO) throws URISyntaxException {
         log.debug("REST request to update Project : {}", projectDTO);
         if (projectDTO.getId() == null) {
@@ -113,11 +112,22 @@ public class ProjectResource {
      */
     @DeleteMapping("/projects/{id}")
     @Timed
-    @Secured(AuthoritiesConstants.DEVELOPER)
     public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
         log.debug("REST request to delete Project : {}", id);
         projectService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
+    /**
+     * GET  /project/:projectId/test-cases : get all the testCases for project.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of testCases in body
+     */
+    @GetMapping("/projects/{projectId}/test-cases")
+    @Timed
+    public List<TestCaseDTO> getAllTestCases(@PathVariable Long projectId) {
+        log.debug("REST request to get all TestCases for project");
+        ProjectDTO projectDTO = projectService.findOne(projectId);
+        return testCaseService.findAllByProject(projectDTO);
+    }
 }

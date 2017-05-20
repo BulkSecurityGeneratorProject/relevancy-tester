@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 public class ProjectServiceImpl implements ProjectService{
 
     private final Logger log = LoggerFactory.getLogger(ProjectServiceImpl.class);
-    
+
     private final ProjectRepository projectRepository;
 
     private final ProjectMapper projectMapper;
@@ -42,6 +43,7 @@ public class ProjectServiceImpl implements ProjectService{
     public ProjectDTO save(ProjectDTO projectDTO) {
         log.debug("Request to save Project : {}", projectDTO);
         Project project = projectMapper.projectDTOToProject(projectDTO);
+        project.setCreated_date(ZonedDateTime.now());
         project = projectRepository.save(project);
         ProjectDTO result = projectMapper.projectToProjectDTO(project);
         return result;
@@ -49,7 +51,7 @@ public class ProjectServiceImpl implements ProjectService{
 
     /**
      *  Get all the projects.
-     *  
+     *
      *  @return the list of entities
      */
     @Override

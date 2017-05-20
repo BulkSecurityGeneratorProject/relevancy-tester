@@ -1,10 +1,16 @@
 package com.relevancytester.service.mapper;
 
-import com.relevancytester.domain.*;
+import com.relevancytester.domain.Project;
+import com.relevancytester.domain.TestCase;
 import com.relevancytester.service.dto.ProjectDTO;
+import com.relevancytester.service.dto.TestCaseDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
-import org.mapstruct.*;
 import java.util.List;
+import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
 
 /**
  * Mapper for the entity Project and its DTO ProjectDTO.
@@ -26,7 +32,7 @@ public interface ProjectMapper {
      * @param id id of the entity
      * @return the entity instance
      */
-     
+
     default Project projectFromId(Long id) {
         if (id == null) {
             return null;
@@ -35,6 +41,11 @@ public interface ProjectMapper {
         project.setId(id);
         return project;
     }
-    
+
+    default Set<TestCaseDTO> testCaseDTOfromTestCase(Set<TestCase> cases) {
+        return cases.stream()
+            .map(testCase -> Mappers.getMapper(TestCaseMapper.class).testCaseToTestCaseDTO(testCase))
+            .collect(toSet());
+    }
 
 }

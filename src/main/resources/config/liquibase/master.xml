@@ -6,6 +6,10 @@
 
     <include file="classpath:config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170508154025_added_entity_Project.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170509192355_added_entity_TestCase.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170520201555_added_entity_Extractor.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="classpath:config/liquibase/changelog/20170509192355_added_entity_constraints_TestCase.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170520201955_added_entity_constraints_Extractor.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

@@ -5,6 +5,7 @@ import com.relevancytester.RelevancyTesterApp;
 import com.relevancytester.domain.Project;
 import com.relevancytester.repository.ProjectRepository;
 import com.relevancytester.service.ProjectService;
+import com.relevancytester.service.TestCaseService;
 import com.relevancytester.service.dto.ProjectDTO;
 import com.relevancytester.service.mapper.ProjectMapper;
 import com.relevancytester.web.rest.errors.ExceptionTranslator;
@@ -24,8 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,8 +45,8 @@ public class ProjectResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_CREATED_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_CREATED_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final ZonedDateTime DEFAULT_CREATED_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_CREATED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
     @Autowired
     private ProjectRepository projectRepository;
@@ -56,6 +56,9 @@ public class ProjectResourceIntTest {
 
     @Autowired
     private ProjectService projectService;
+
+    @Autowired
+    private TestCaseService testCaseService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -76,7 +79,7 @@ public class ProjectResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        ProjectResource projectResource = new ProjectResource(projectService);
+        ProjectResource projectResource = new ProjectResource(projectService, testCaseService);
         this.restProjectMockMvc = MockMvcBuilders.standaloneSetup(projectResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

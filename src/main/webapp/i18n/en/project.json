@@ -2,7 +2,7 @@
     "relevancyTesterApp": {
         "project" : {
             "home": {
-                "title": "Projects administration",
+                "title": "Projects",
                 "createLabel": "Create a new Project",
                 "createOrEditLabel": "Create or edit a Project"
             },
@@ -16,7 +16,10 @@
                 "title": "Project"
             },
             "name": "Name",
-            "created_date": "Created Date"
+            "created_date": "Created Date",
+            "cases": "Cases",
+            "edit": "Edit project",
+            "addCase": "New Test Case"
         }
     }
 }

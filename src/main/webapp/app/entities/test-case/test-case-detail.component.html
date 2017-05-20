@@ -1,0 +1,35 @@
+
+<div *ngIf="testCase">
+    <h2><span jhiTranslate="relevancyTesterApp.testCase.detail.title">Test Case</span> {{testCase.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="relevancyTesterApp.testCase.name">Name</span></dt>
+        <dd>
+            <span>{{testCase.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="relevancyTesterApp.testCase.createdDate">Created Date</span></dt>
+        <dd>
+            <span>{{testCase.createdDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="relevancyTesterApp.testCase.project">Project</span></dt>
+        <dd>
+            <div *ngIf="testCase.projectId">
+                <a [routerLink]="['/project', testCase.projectId]">{{testCase.projectId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'test-case/'+ testCase.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

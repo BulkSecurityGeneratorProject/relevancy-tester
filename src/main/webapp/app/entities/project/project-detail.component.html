@@ -1,15 +1,56 @@
-
 <div *ngIf="project">
-    <h2>{{project.name}}</h2>
-    <hr>
-    <jhi-alert-error></jhi-alert-error>
+    <div>
+        <h2>{{project.name}}</h2>
+        <hr>
+        <jhi-alert-error></jhi-alert-error>
 
-    <button type="button"
-            [routerLink]="['/', { outlets: { popup: 'project/'+ project.id + '/edit'} }]"
-            replaceUrl="true"
-            class="btn btn-primary"
-            *jhiHasAnyAuthority="'ROLE_DEVELOPER'">
-        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
-    </button>
+        <div class="btn-group flex-btn-group-container">
+            <button type="button"
+                    [routerLink]="['/', { outlets: { popup: 'project/'+ project.id + '/test-case-new'} }]"
+                    replaceUrl="true"
+                    class="btn btn-info">
+                <span class="fa fa-plus"></span>&nbsp;
+                <span class="hidden-md-down" jhiTranslate="relevancyTesterApp.project.addCase"> New Case</span>
+            </button>
+            <button type="button"
+                    [routerLink]="['/', { outlets: { popup: 'project/'+ project.id + '/edit'} }]"
+                    replaceUrl="true"
+                    class="btn btn-primary">
+                <span class="fa fa-pencil"></span>&nbsp;
+                <span class="hidden-md-down" jhiTranslate="relevancyTesterApp.project.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="cases">
+        <h3>Test cases</h3>
+        <div *ngFor="let testCase of cases ;trackBy: trackId">
+            <hr>
+            <h4><a [routerLink]="['test-case', testCase.id ]">{{testCase.name}}</a></h4>
+            <div class="text-right">
+                <div class="btn-group flex-btn-group-container">
+                    <button type="submit"
+                            [routerLink]="['test-case', testCase.id ]"
+                            class="btn btn-info btn-sm">
+                        <span class="fa fa-eye"></span>
+                        <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                    </button>
+                    <button type="submit"
+                            [routerLink]="['/', { outlets: { popup: 'project/'+ project.id + '/test-case/'+ testCase.id + '/edit'} }]"
+                            replaceUrl="true"
+                            class="btn btn-primary btn-sm">
+                        <span class="fa fa-pencil"></span>
+                        <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                    </button>
+                    <button type="submit"
+                            [routerLink]="['/', { outlets: { popup: 'project/'+ project.id + '/test-case/'+ testCase.id + '/delete'} }]"
+                            replaceUrl="true"
+                            class="btn btn-danger btn-sm">
+                        <span class="fa fa-remove"></span>
+                        <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>

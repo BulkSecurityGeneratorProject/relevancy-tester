@@ -30,7 +30,7 @@ export class ProjectDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.authorities = ['ROLE_DEVELOPER'];
+        this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
     }
     clear() {
         this.activeModal.dismiss('cancel');

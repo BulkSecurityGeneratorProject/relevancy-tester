@@ -3,6 +3,7 @@ export class Project {
         public id?: number,
         public name?: string,
         public created_date?: any,
+        public casesId?: number,
     ) {
     }
 }

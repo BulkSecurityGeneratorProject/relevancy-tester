@@ -1,19 +1,24 @@
 package com.relevancytester.service.dto;
 
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
- * A DTO for the Project entity.
+ * A DTO for the TestCase entity.
  */
-public class ProjectDTO implements Serializable {
+public class TestCaseDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
     private String name;
 
-    private ZonedDateTime created_date;
+    private ZonedDateTime createdDate;
+
+    private Long projectId;
 
     public Long getId() {
         return id;
@@ -29,12 +34,20 @@ public class ProjectDTO implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    public ZonedDateTime getCreated_date() {
-        return created_date;
+    public ZonedDateTime getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreated_date(ZonedDateTime created_date) {
-        this.created_date = created_date;
+    public void setCreatedDate(ZonedDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 
     @Override
@@ -46,9 +59,9 @@ public class ProjectDTO implements Serializable {
             return false;
         }
 
-        ProjectDTO projectDTO = (ProjectDTO) o;
+        TestCaseDTO testCaseDTO = (TestCaseDTO) o;
 
-        if ( ! Objects.equals(id, projectDTO.id)) { return false; }
+        if ( ! Objects.equals(id, testCaseDTO.id)) { return false; }
 
         return true;
     }
@@ -60,10 +73,10 @@ public class ProjectDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "ProjectDTO{" +
+        return "TestCaseDTO{" +
             "id=" + id +
             ", name='" + name + "'" +
-            ", created_date='" + created_date + "'" +
+            ", createdDate='" + createdDate + "'" +
             '}';
     }
 }

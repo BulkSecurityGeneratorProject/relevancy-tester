@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import {JhiLanguageService, AlertService} from 'ng-jhipster';
+import {JhiLanguageService, AlertService, EventManager} from 'ng-jhipster';
 
 import { ProfileService } from '../profiles/profile.service'; // FIXME barrel doesn't work here
 import { JhiLanguageHelper, Principal, LoginModalService, LoginService } from '../../shared';
@@ -10,6 +10,7 @@ import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
 import {ProjectService} from '../../entities/project/project.service';
 import {Response} from '@angular/http';
 import {Project} from '../../entities/project/project.model';
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'jhi-navbar',
@@ -28,6 +29,8 @@ export class NavbarComponent implements OnInit {
     version: string;
     projects: Project[];
 
+    private eventSubscriber: Subscription;
+
     constructor(
         private loginService: LoginService,
         private languageHelper: JhiLanguageHelper,
@@ -37,7 +40,8 @@ export class NavbarComponent implements OnInit {
         private profileService: ProfileService,
         private router: Router,
         private projectService: ProjectService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private eventManager: EventManager
     ) {
         this.version = DEBUG_INFO_ENABLED ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
@@ -54,6 +58,11 @@ export class NavbarComponent implements OnInit {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
+        this.registerChangeInProjects();
+    }
+
+    registerChangeInProjects() {
+        this.eventSubscriber = this.eventManager.subscribe('projectListModification', (response) => this.loadProjects());
     }
 
     loadProjects() {
