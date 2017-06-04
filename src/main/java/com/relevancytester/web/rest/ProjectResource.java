@@ -1,8 +1,10 @@
 package com.relevancytester.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.relevancytester.service.ExtractorService;
 import com.relevancytester.service.ProjectService;
 import com.relevancytester.service.TestCaseService;
+import com.relevancytester.service.dto.ExtractorDTO;
 import com.relevancytester.service.dto.ProjectDTO;
 import com.relevancytester.service.dto.TestCaseDTO;
 import com.relevancytester.web.rest.util.HeaderUtil;
@@ -30,10 +32,12 @@ public class ProjectResource {
 
     private final ProjectService projectService;
     private final TestCaseService testCaseService;
+    private final ExtractorService extractorService;
 
-    public ProjectResource(ProjectService projectService, TestCaseService testCaseService) {
+    public ProjectResource(ProjectService projectService, TestCaseService testCaseService, ExtractorService extractorService) {
         this.projectService = projectService;
         this.testCaseService = testCaseService;
+        this.extractorService = extractorService;
     }
 
     /**
@@ -129,5 +133,18 @@ public class ProjectResource {
         log.debug("REST request to get all TestCases for project");
         ProjectDTO projectDTO = projectService.findOne(projectId);
         return testCaseService.findAllByProject(projectDTO);
+    }
+
+    /**
+     * GET  /project/:projectId/extractors : get all the extractors for project.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of testCases in body
+     */
+    @GetMapping("/projects/{projectId}/extractors")
+    @Timed
+    public List<ExtractorDTO> getAllExtractors(@PathVariable Long projectId) {
+        log.debug("REST request to get all Extractors for project");
+        ProjectDTO projectDTO = projectService.findOne(projectId);
+        return extractorService.findAllByProject(projectDTO);
     }
 }

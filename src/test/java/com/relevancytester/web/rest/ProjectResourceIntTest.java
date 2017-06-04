@@ -4,6 +4,7 @@ import com.relevancytester.RelevancyTesterApp;
 
 import com.relevancytester.domain.Project;
 import com.relevancytester.repository.ProjectRepository;
+import com.relevancytester.service.ExtractorService;
 import com.relevancytester.service.ProjectService;
 import com.relevancytester.service.TestCaseService;
 import com.relevancytester.service.dto.ProjectDTO;
@@ -61,6 +62,9 @@ public class ProjectResourceIntTest {
     private TestCaseService testCaseService;
 
     @Autowired
+    private ExtractorService extractorService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -79,7 +83,7 @@ public class ProjectResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        ProjectResource projectResource = new ProjectResource(projectService, testCaseService);
+        ProjectResource projectResource = new ProjectResource(projectService, testCaseService, extractorService);
         this.restProjectMockMvc = MockMvcBuilders.standaloneSetup(projectResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
